@@ -17,4 +17,4 @@ tasks:
   make:
     cmds:
       - uv run task build
-      - pyinstaller ./main.py --add-data "./frontend:./frontend" --onefile --distpath ./dist --name app
+      - nuitka ./main.py --windows-console-mode=disable --standalone --onefile --include-data-dir=./frontend=./frontend

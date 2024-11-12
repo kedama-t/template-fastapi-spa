@@ -1,3 +1,8 @@
+## Requirements
+
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- [Bun](https://bun.sh/docs/installation)
+
 ## Python 環境
 
 ```sh
@@ -9,7 +14,7 @@ uv add "uvicorn[standard]"
 uv add --dev go-task-bin
 
 # ビルダー
-uv add --dev pyinstaller
+uv add --dev nuitka
 ```
 
 ## フロントエンド

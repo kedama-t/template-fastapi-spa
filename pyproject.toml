@@ -10,8 +10,8 @@ dependencies = [
 ]
 
 [tool.uv]
-allow-insecure-host = ["pypi.org", 'files.pythonhosted.org']
+allow-insecure-host = ["pypi.org", 'files.pythonhosted.org', 'github.com']
 dev-dependencies = [
     "go-task-bin>=3.40.0",
-    "pyinstaller>=6.11.1",
+    "nuitka>=2.4.11",
 ]
