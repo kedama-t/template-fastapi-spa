@@ -17,4 +17,4 @@ tasks:
   make:
     cmds:
       - uv run task build
-      - nuitka ./main.py --windows-console-mode=disable --standalone --onefile --include-data-dir=./frontend=./frontend
+      - nuitka ./main.py --standalone --include-data-dir=./frontend/build/client=./frontend/build/client
