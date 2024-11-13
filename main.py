@@ -1,5 +1,5 @@
+import os
 import sys
-import webbrowser
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# CORS
+# 開発用CORS
 origins = [
     "http://127.0.0.1:8000",
     "http://localhost:5173",
@@ -28,22 +28,35 @@ def read_root():
     return {"Hello": "World"}
 
 
-def base_dir():
-    if hasattr(sys, "_MEIPASS"):
-        return Path(sys._MEIPASS)
+def is_nuitka():
+    # Nuitkaでコンパイルされているかどうかを確認
+    return "__compiled__" in globals()
+
+
+def get_dir():
+    # ディレクトリパスの取得
+    if is_nuitka():
+        return os.path.dirname(os.path.abspath(sys.argv[0]))
     else:
-        return Path(".")
+        return "."
 
 
-# Serve Frontend
-app.mount(
-    "/",
-    StaticFiles(directory=base_dir() / "frontend/build/client", html=True),
-    name="rr",
-)
+# フロントエンドの配信
+frontend_dir = directory = Path(get_dir()) / "frontend/build/client"
+if frontend_dir.exists():
+    app.mount(
+        "/",
+        StaticFiles(directory=frontend_dir, html=True),
+        name="rr",
+    )
 
 if __name__ == "__main__":
     import uvicorn
 
-    webbrowser.open("http://127.0.0.1:8000/", new=2, autoraise=True)
+    if is_nuitka():
+        # Nuitkaで実行時はブラウザを開く
+        import webbrowser
+
+        webbrowser.open("http://127.0.0.1:8000/", new=2, autoraise=True)
+
     uvicorn.run(app, host="127.0.0.1", port=8000)
