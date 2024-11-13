@@ -3,6 +3,7 @@ version: '3'
 tasks:
   run:
     cmds:
+      - uv run task build
       - uv run main.py
 
   build:
@@ -11,8 +12,7 @@ tasks:
 
   dev:
     cmds:
-      - uv run main.py &
-      - cd frontend && bun install && bun run dev
+      - uv run uvicorn main:app --reload & (cd frontend && bun install && bun run dev)
 
   make:
     cmds:
